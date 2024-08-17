@@ -59,6 +59,7 @@ def create_app(config=None):
         config = {}
 
     configure_logging(level=logging.DEBUG)
+    SETTINGS.DEBUG = True
 
     if SETTINGS.SENTRY_DSN:
         sentry_sdk.init(
