@@ -73,7 +73,7 @@ OPERATIONS = {
 
 class AlephWorker(Worker):
     def boot(self):
-        self.often = get_rate_limit("often", unit=300, interval=1, limit=1)
+        self.often = get_rate_limit("often", unit=60, interval=1, limit=1)
         self.daily = get_rate_limit("daily", unit=3600, interval=24, limit=1)
 
     def periodic(self):
