@@ -71,16 +71,17 @@ class LoggingTransport(Transport):
             method, url, headers, params, body
         )
         payload = {
-            "es_req_method": method,
-            "es_url": url,
-            "es_req_params": params,
-            "es_req_body": body,
+            "url": method + ' ' + url,
             "took": hasattr(result, "get") and result.get("took"),
+            "params": params,
+            "request": "\n" + json.dumps(body, default=str) + "\n",
+            #"request": "\n" + json.dumps(body, default=str, indent=2) + "\n",
+            #"response": "\n" + json.dumps(result, default=str, indent=2) + "\n",
         }
         # Don't log the request body when writing entities to the index
         # to prevent unnecessarily large logs
         if url.endswith("_bulk"):
-            del payload["es_req_body"]
+            del payload["request"]
         log.debug("Performed ES request", **payload)
         return result
 
