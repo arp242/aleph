@@ -87,11 +87,11 @@ def get_authz(request):
     authz = None
 
     if "Authorization" in request.headers:
-        credential = request.headers.get("Authorization")
-        authz = _get_credential_authz(credential)
-
-    if authz is None and "api_key" in request.args:
+        authz = _get_credential_authz(request.headers.get("Authorization"))
+    elif "api_key" in request.args:
         authz = _get_credential_authz(request.args.get("api_key"))
+    elif request.cookies.get('token') is not None:
+        authz = _get_credential_authz('Token ' + request.cookies.get('token'))
 
     return authz
 
