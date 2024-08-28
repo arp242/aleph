@@ -211,4 +211,5 @@ def url_external(path, query, relative=False):
         path = "%s?%s" % (path, urlencode(query))
     if relative:
         return path
-    return urljoin(SETTINGS.APP_UI_URL, path)
+    #return urljoin(SETTINGS.APP_UI_URL, path)
+    return urljoin('http://aleph.localhost:8000/', path)
