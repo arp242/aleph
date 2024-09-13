@@ -83,7 +83,7 @@ class AlephWorker(Worker):
                 self.often.update()
                 log.info("Self-check...")
                 self.cleanup_jobs()
-                compute_collections()
+                #compute_collections()
 
             if self.daily.check():
                 self.daily.update()
