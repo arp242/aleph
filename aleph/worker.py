@@ -144,7 +144,7 @@ class AlephWorker(Worker):
                 if self.often.check():
                     self.often.update()
                     log.info("Self-check...")
-                    compute_collections()
+                    #compute_collections()
 
                 if self.daily.check():
                     self.daily.update()
