@@ -226,4 +226,4 @@ def generate_request_log(resp, took):
     bind_contextvars(**payload)
     # This logging statement is here to make sure we log the context of every
     # request for analytics purposes
-    log.info("Request handled", request_logging=True)
+    #log.info("Request handled", request_logging=True)
