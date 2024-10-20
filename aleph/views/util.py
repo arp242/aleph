@@ -142,7 +142,11 @@ def get_url_path(url):
 
 def jsonify(obj, status=200, headers=None, encoder=JSONEncoder):
     """Serialize to JSON and also dump from the given schema."""
-    data = encoder().encode(obj)
+
+    enc = encoder()
+    enc.indent = 2
+    data = enc.encode(obj)
+
     mimetype = "application/json"
     if "callback" in request.args:
         cb = request.args.get("callback")
