@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+set -euC
+cd $0:h/proxy
+
+go run . $0:h:h:h/alfred/ui/build

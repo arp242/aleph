@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+set -euC
+cd $0:h:h
+source ./bin/aleph-venv
+
+export ALEPH_SECRET_KEY='XXX'
+export ALEPH_DATABASE_URI=${DB:-'postgresql://aleph:aleph@localhost:5432/aleph'}
+export FTM_STORE_URI=$ALEPH_DATABASE_URI
+export ARCHIVE_TYPE=file
+export ARCHIVE_PATH=/tmp/alfred/uploads
+export REDIS_URL=redis://localhost:6379/${REDIS_DB:-0}
+export FTM_COMPARE_FREQUENCIES_DIR=$(pwd)/ftm-compare/word-frequencies
+export FTM_COMPARE_MODEL=$(pwd)/ftm-compare/model.pkl
+export RABBITMQ_URL=${RABBITMQ:-'127.0.0.1'}
+export RABBITMQ_USERNAME=guest
+export RABBITMQ_PASSWORD=guest
+
+aleph $argv

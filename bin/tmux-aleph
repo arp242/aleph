@@ -1,0 +1,35 @@
+#!/usr/bin/env zsh
+set -euC
+cd $0:h:h
+source ./bin/aleph-venv
+
+# Make sure PostgreSQL database and Elasticsearch indexes exist.
+#psql -X $ALEPH_DATABASE_URI -c 'select 1 from role' >/dev/null 2>&1 || aleph upgrade
+
+s=aleph
+att() {
+	if [ -n "${TMUX:-}" ]; then
+		tmux switch-client -t "=$s"
+	else
+		tmux attach-session -t "=$s"
+	fi
+}
+if tmux has-session -t "=$s" 2> /dev/null; then
+	att
+	exit 0
+fi
+tmux new-session -d -s "$s" -c ./aleph/aleph
+
+tmux new-window -d -t "=$s" -n api
+tmux send-keys -t "=$s:=api" 'aleph-serve' Enter
+
+tmux new-window -d -t "=$s" -n proxy
+tmux send-keys -t "=$s:=proxy" 'aleph-proxy' Enter
+
+tmux new-window -d -t "=$s" -n worker
+tmux send-keys -t "=$s:=worker" 'aleph worker' Enter
+
+#tmux new-window -d -t "=$s" -n ingest-file
+#tmux send-keys -t "=$s:=ingest-file" 'aleph worker' Enter
+
+att

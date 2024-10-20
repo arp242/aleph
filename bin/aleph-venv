@@ -1,0 +1,18 @@
+# vim:ft=zsh
+
+env='./env'
+
+# Setup venv if it doesn't exist yet.
+(
+	mkdir -p $env
+	[[ -f $env/bin/activate ]] || python -mvenv $env
+	source $env/bin/activate
+	[[ -f $env/bin/ftm ]] || pip install -r requirements.txt
+	for p in setuptools lxml lxml_html_clean; do
+		x=( $env/lib/python*/site-packages/$p-*.dist-info(N) )
+		(( $#x )) || pip install $p
+	done
+	[[ -f $env/bin/aleph ]] || pip install .
+)
+
+source $env/bin/activate
