@@ -163,7 +163,7 @@ def get_es():
             if not hasattr(SETTINGS, "_es_instance"):
                 # When logging structured logs, use a custom transport to log
                 # all es queries and their response time
-                if sls.LOG_FORMAT == LOG_FORMAT_JSON:
+                if True or sls.LOG_FORMAT == LOG_FORMAT_JSON:
                     es = Elasticsearch(
                         url,
                         transport_class=LoggingTransport,
